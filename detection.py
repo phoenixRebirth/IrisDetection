@@ -10,45 +10,46 @@ import random
 from sklearn.model_selection import ShuffleSplit
 from sklearn.naive_bayes import GaussianNB
 
-#0 Data processing¶
+from entity.dataset import Dataset
 
-# set random generator seed
-# random.seed(20170312)
-
-# input:
-# output:
-#   List of List (nbr data = nbr rows, nbr parameters = nbr cols):  X
-#   List (nbr data = nbr elements):                                 Y
-def import_data():
+algorithms = {'svm': svm.SVC(decision_function_shape='ovo'), 'LogisticRegression':LogisticRegression(solver='newton-cg', max_iter=100, random_state=42,
+                              multi_class='multinomial'), 'NaïveBayes':GaussianNB()}
+def import_data_from_sklearn():
     dataset = datasets.load_iris()
-    return dataset.data, dataset.target
+    return Dataset(dataset.data, dataset.target)
+
+if __name__ == '__main__':
+    iris_set = import_data_from_sklearn()
+    scores_cross_validation_app, scores_cross_validation_test = iris_set.cross_validations(
+        algorithms['svm'], 10, 0.10
+    )
+    print("score cross validation sur apprentissage:")
+    print(scores_cross_validation_app)
+    print("mean score cross validation sur apprentissage:")
+    print(np.mean(scores_cross_validation_app))
+    print("std score cross validation sur apprentissage:")
+    print(np.std(scores_cross_validation_app))
+    print("score cross validation sur test:")
+    print(scores_cross_validation_test)
+    print("mean score cross validation sur test:")
+    print(np.mean(scores_cross_validation_test))
+    print("std score cross validation sur test:")
+    print(np.std(scores_cross_validation_test))
+    print("mean score + std score cross validation sur test:")
+    print(np.mean(scores_cross_validation_test) + np.std(scores_cross_validation_test))
+    print("std score cross validation sur test:")
 
 
-def split_train_test(x, y, nb_training_data):
-    nb_data = len(x)
-    indexes = shuffle(range(0,nb_data))
 
-    x_train = iris_df.data[indexes[:nb_training_data], ]
-    y_train = iris_df.target[indexes[:nb_training_data]]
-    x_test = iris_df.data[indexes[nb_training_data:], ]
-    y_test = iris_df.target[indexes[nb_training_data:]]
+# def main(argv = None):
+#     print("jespère que tu as raison")
+#     return 0
+#
+#     if __name__ == "__main__":
+#         print("jespère que tu as raison")
+#         return 0
+#         sys.exit(main())
 
-    return x_train, x_test, y_train, y_test
-
-def train_algorithm(algorithm, x_train, y_train):
-    trained_algorithm = algorithm.fit(x_train, y_train)
-    print('Train precision: '+ trained_algorithm.score(x_train, y_train))
-    return trained_algorithm
-
-def evaluate_test_data(trained_algorithm, x_test, y_test):
-
-
-algorithm = LogisticRegression(solver='newton-cg', max_iter=100, random_state=42, multi_class='multinomial')
-
-train_precision = trained_algorithm.score(x_train, y_train)
-
-y_pred = trained_algorithm.predict(x_test)
-test_precision = trained_algorithm.score(x_test, y_test)
 
 #
 # # 2 Cross-validations
@@ -59,7 +60,7 @@ test_precision = trained_algorithm.score(x_test, y_test)
 #
 # ss = ShuffleSplit(n_splits=10, random_state=0)
 # i = 0
-# for train_index, test_index in ss.split(iris_df.target):
+# for train_indexes, test_indexes in ss.split(iris_df.target):
 #     logreg_clf = LogisticRegression(solver='newton-cg', max_iter=100, random_state=42,
 #                              multi_class='multinomial').fit(iris_df.data[train_index,], iris_df.target[train_index])
 #     svm_clf = svm.SVC(decision_function_shape='ovo').fit(iris_df.data[train_index,], iris_df.target[train_index])
@@ -85,11 +86,4 @@ test_precision = trained_algorithm.score(x_test, y_test)
 # # Naive Bayes works not very well because of strong theorical hypotheses (features independence)
 # # which is not intuitively met in this case.
 # # SVM work better than logistic regression because of the kernel transformation
-#
-#
-#
-#
-#
-#
-#
 #
