@@ -10,34 +10,34 @@ import random
 from sklearn.model_selection import ShuffleSplit
 from sklearn.naive_bayes import GaussianNB
 
-from entity.dataset import Dataset
+from entity import Dataset, Algorithm
 
-algorithms = {'svm': svm.SVC(decision_function_shape='ovo'), 'LogisticRegression':LogisticRegression(solver='newton-cg', max_iter=100, random_state=42,
-                              multi_class='multinomial'), 'NaïveBayes':GaussianNB()}
 def import_data_from_sklearn():
     dataset = datasets.load_iris()
     return Dataset(dataset.data, dataset.target)
 
 if __name__ == '__main__':
     iris_set = import_data_from_sklearn()
-    scores_cross_validation_app, scores_cross_validation_test = iris_set.cross_validations(
-        algorithms['svm'], 10, 0.10
-    )
-    print("score cross validation sur apprentissage:")
-    print(scores_cross_validation_app)
-    print("mean score cross validation sur apprentissage:")
-    print(np.mean(scores_cross_validation_app))
-    print("std score cross validation sur apprentissage:")
-    print(np.std(scores_cross_validation_app))
-    print("score cross validation sur test:")
-    print(scores_cross_validation_test)
-    print("mean score cross validation sur test:")
-    print(np.mean(scores_cross_validation_test))
-    print("std score cross validation sur test:")
-    print(np.std(scores_cross_validation_test))
-    print("mean score + std score cross validation sur test:")
-    print(np.mean(scores_cross_validation_test) + np.std(scores_cross_validation_test))
-    print("std score cross validation sur test:")
+    iris_set.generate_train_test_indexes(10, 0.1)
+
+    svm = Algorithm('svm')
+    svm.train_on_dataset(iris_set)
+    
+    # print("score cross validation sur apprentissage:")
+    # print(scores_cross_validation_app)
+    # print("mean score cross validation sur apprentissage:")
+    # print(np.mean(scores_cross_validation_app))
+    # print("std score cross validation sur apprentissage:")
+    # print(np.std(scores_cross_validation_app))
+    # print("score cross validation sur test:")
+    # print(scores_cross_validation_test)
+    # print("mean score cross validation sur test:")
+    # print(np.mean(scores_cross_validation_test))
+    # print("std score cross validation sur test:")
+    # print(np.std(scores_cross_validation_test))
+    # print("mean score + std score cross validation sur test:")
+    # print(np.mean(scores_cross_validation_test) + np.std(scores_cross_validation_test))
+    # print("std score cross validation sur test:")
 
 
 
