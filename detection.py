@@ -20,11 +20,13 @@ if __name__ == '__main__':
     iris_set = import_data_from_sklearn()
     iris_set.generate_train_test_indexes(10, 0.1)
 
-    svm = Algorithm('svm')
-    svm.train_on_dataset(iris_set)
-    score = svm.calculate_score()
-    print(score)
-    svm.reinitialize()
+    C_range = [0.1*(i+1) for i in range(0, 100)]
+    for c in C_range:
+        svm = Algorithm('svm', C = c)
+        svm.train_on_dataset(iris_set)
+        score = svm.calculate_score()
+        print(score)
+        svm.reinitialize()
 
     # print("score cross validation sur apprentissage:")
     # print(scores_cross_validation_app)

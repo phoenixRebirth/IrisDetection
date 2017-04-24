@@ -17,9 +17,9 @@ from .train_case import TrainCase
 
 class Algorithm():
 
-    def __init__(self, algo):
+    def __init__(self, algo, *args, **kwargs):
         try:
-            self.algorithm = ALGORITHMS_TYPE[algo]
+            self.algorithm = ALGORITHMS_TYPE[algo](kwargs)
         except KeyError:
         # except (KeyError, ValueError) as e:
             print("l'algo renseigné '" + algo + "' n'existe pas")
