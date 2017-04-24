@@ -22,7 +22,10 @@ if __name__ == '__main__':
 
     svm = Algorithm('svm')
     svm.train_on_dataset(iris_set)
-    
+    score = svm.calculate_score()
+    print(score)
+    svm.reinitialize()
+
     # print("score cross validation sur apprentissage:")
     # print(scores_cross_validation_app)
     # print("mean score cross validation sur apprentissage:")
