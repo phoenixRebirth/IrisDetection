@@ -1,4 +1,5 @@
 from sklearn.model_selection import ShuffleSplit
+from sklearn import datasets
 
 class Dataset():
     # args est le tableau des paramètres supplémentaires(en option(*))
@@ -20,3 +21,14 @@ class Dataset():
         for train_indexes, test_indexes in self.shuffle_split.split(self.label):
             self.train_indexes_table.append(train_indexes)
             self.test_indexes_table.append(test_indexes)
+
+
+    @staticmethod
+    def import_data_from_sklearn():
+        dataset = datasets.load_iris()
+        return Dataset(dataset.data, dataset.target)
+
+    @staticmethod
+    def import_data_from_file(filename):
+        print('this function is not supported yet')
+        exit()
