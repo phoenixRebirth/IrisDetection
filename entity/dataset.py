@@ -2,12 +2,6 @@ from sklearn.model_selection import ShuffleSplit
 from sklearn import datasets
 
 class Dataset():
-    # args est le tableau des paramètres supplémentaires(en option(*))
-    # kwargs est le dico des paramètres supplémentaires(en option(*))
-    # les paramètres de la forme a = 'quelque chose' sont stockés dans kwargs
-    # les paramètres non nommés sont stockés dans args
-    # notion d'odre = tableau
-    # notion d'association = dico (un dico n'a pas d'ordre)
 
     def __init__(self, data, label, *args, **kwargs):
         self.data = data

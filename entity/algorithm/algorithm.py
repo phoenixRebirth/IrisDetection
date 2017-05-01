@@ -10,7 +10,7 @@ import random
 from sklearn.model_selection import ShuffleSplit
 from sklearn.naive_bayes import GaussianNB
 
-# nos imports
+# our imports
 from .constants import ALGORITHMS_TYPE
 from entity.dataset import Dataset
 from .train_case import TrainCase
@@ -21,8 +21,7 @@ class Algorithm():
         try:
             self.algorithm = ALGORITHMS_TYPE[algo](kwargs)
         except KeyError:
-        # except (KeyError, ValueError) as e:
-            print("l'algo renseigné '" + algo + "' n'existe pas")
+            print("the algorithm '" + algo + "' is not recognized")
             exit()
 
         self.dataset = None
