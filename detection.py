@@ -9,6 +9,7 @@ from sklearn.model_selection import KFold
 import random
 from sklearn.model_selection import ShuffleSplit
 from sklearn.naive_bayes import GaussianNB
+import copy
 
 from entity import Dataset, Algorithm
 from config import DEFAULT_SAMPLE_NUMBER, DEFAULT_TEST_PROPORTION
@@ -40,12 +41,26 @@ if __name__ == '__main__':
     iris_set = Dataset.import_data_from_sklearn()
     iris_set.generate_train_test_indexes(n_samples, test_proportion)
 
-    C_range = [0.1*(i+1) for i in range(0, 10)]
-    output = []
-    for c in C_range:
-        svm = Algorithm('svm', C = c)
-        svm.train_on_dataset(iris_set)
-        score = svm.calculate_score()
-        output.append(score)
-        print(score)
-        svm.reinitialize()
+    inputs = [
+        { 'type': 'svm', 'params': {'C': 1} },
+        { 'type': 'LogisticRegression', 'params': {} },
+        { 'type': 'NaiveBayes', 'params': {} },
+    ]
+    outputs = []
+
+    for input_algo in inputs:
+        algo_type = input_algo['type']
+        params = input_algo['params']
+        algo = Algorithm(algo_type, **params)
+        algo.train_on_dataset(iris_set)
+
+        algo_details_output = copy.deepcopy(input_algo)
+        algo_details_output['score'] = algo.calculate_score()
+        outputs.append(algo_details_output)
+
+        algo.reinitialize()
+
+    print('\n')
+    print('Results: ')
+    for output in outputs:
+        print(output)
