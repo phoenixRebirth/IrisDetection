@@ -1,7 +1,8 @@
-import json
 from sklearn.model_selection import ShuffleSplit
 from sklearn import datasets
 import numpy
+
+import service.file_reader as file_reader
 
 class Dataset():
 
@@ -27,20 +28,7 @@ class Dataset():
     def import_data_from_file(filename):
         # TODO : import directly data into numpy array
         # TODO : manage numpy.array conversion error
-        try:
-            f = open(filename, 'r')
-        except FileNotFoundError:
-            print('File ' + filename + ' not found')
-            exit()
-
-        data = f.read()
-
-        try:
-            parsed_data = json.loads(data)
-        except json.decoder.JSONDecodeError as e:
-            print('Could not read file:\n' + str(e))
-            exit()
-
+        parsed_data = file_reader.open_json(filename)
         try:
             data = parsed_data['data']
             label = parsed_data['label']
