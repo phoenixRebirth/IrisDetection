@@ -13,7 +13,7 @@ import copy
 
 from entity import Dataset, Algorithm
 from config import DEFAULT_SAMPLE_NUMBER, DEFAULT_TEST_PROPORTION
-import parser
+import service.parser as parser
 
 def setup_config(sys_args):
     arguments = parser.parse_sys_args(sys_args)
