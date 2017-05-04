@@ -31,6 +31,7 @@ def setup_config(sys_args):
         test_proportion = DEFAULT_TEST_PROPORTION
         print('No test proportion provided. Using '+str(DEFAULT_TEST_PROPORTION)+' instead.')
     print('Running algorithm with '+str(test_proportion)+' as test proportion')
+    print('\n')
 
     return n_samples, test_proportion
 
@@ -38,7 +39,8 @@ def setup_config(sys_args):
 if __name__ == '__main__':
     n_samples, test_proportion = setup_config(sys.argv)
 
-    iris_set = Dataset.import_data_from_sklearn()
+    # iris_set = Dataset.import_data_from_sklearn
+    iris_set = Dataset.import_data_from_file('./data/irisDataset.json')
     iris_set.generate_train_test_indexes(n_samples, test_proportion)
 
     inputs = [
