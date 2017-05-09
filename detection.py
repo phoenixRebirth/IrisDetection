@@ -14,20 +14,19 @@ from entity import Dataset, Algorithm, InputParameters
 from config import DEFAULT_SAMPLE_NUMBER, DEFAULT_TEST_PROPORTION
 import service.parser as parser
 
-def extract_config_path(sys_args):
+def extract_system_arguments(sys_args):
     arguments = parser.parse_sys_args(sys_args)
-
     try:
-        conf_path = arguments['conf']
-    except KeyError :
+        conf_path = arguments.pop('conf')
+    except KeyError:
         print('No config file provided. Please type "conf=myfile"')
         exit()
 
-    return conf_path
+    return conf_path, arguments
 
 if __name__ == '__main__':
-    config_path = extract_config_path(sys.argv)
-    input_parameters = InputParameters.import_parameters_from_file(config_path)
+    config_path, command_arguments = extract_system_arguments(sys.argv)
+    input_parameters = InputParameters.import_parameters_from_file(config_path, command_arguments)
 
     iris_set = Dataset.import_data_from_file(input_parameters.dataset_path)
     iris_set.generate_train_test_indexes(input_parameters.sample_number, input_parameters.test_proportion)
