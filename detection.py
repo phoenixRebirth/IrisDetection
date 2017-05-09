@@ -11,48 +11,34 @@ from sklearn.model_selection import ShuffleSplit
 from sklearn.naive_bayes import GaussianNB
 import copy
 
-from entity import Dataset, Algorithm
+from entity import Dataset, Algorithm, InputParameters
 from config import DEFAULT_SAMPLE_NUMBER, DEFAULT_TEST_PROPORTION
 import service.parser as parser
 
-def setup_config(sys_args):
+def extract_config_path(sys_args):
     arguments = parser.parse_sys_args(sys_args)
 
     try:
-        n_samples = int(arguments['n'])
-    except (ValueError, KeyError) as e :
-        n_samples = DEFAULT_SAMPLE_NUMBER
-        print('No sample number provided. Using '+str(DEFAULT_SAMPLE_NUMBER)+' instead.')
-    print('Running algorithm with '+str(n_samples)+' samples')
+        conf_path = arguments['conf']
+    except KeyError :
+        print('No config file provided. Please type "conf=myfile"')
+        exit()
 
-    try:
-        test_proportion = float(arguments['p'])
-    except (ValueError, KeyError) as e :
-        test_proportion = DEFAULT_TEST_PROPORTION
-        print('No test proportion provided. Using '+str(DEFAULT_TEST_PROPORTION)+' instead.')
-    print('Running algorithm with '+str(test_proportion)+' as test proportion')
-    print('\n')
-
-    return n_samples, test_proportion
-
+    return conf_path
 
 if __name__ == '__main__':
-    n_samples, test_proportion = setup_config(sys.argv)
+    config_path = extract_config_path(sys.argv)
+    input_parameters = InputParameters.import_parameters_from_file(config_path)
 
-    # iris_set = Dataset.import_data_from_sklearn
-    iris_set = Dataset.import_data_from_file('./data/irisDataset.json')
-    iris_set.generate_train_test_indexes(n_samples, test_proportion)
+    iris_set = Dataset.import_data_from_file(input_parameters.dataset_path)
+    iris_set.generate_train_test_indexes(input_parameters.sample_number, input_parameters.test_proportion)
 
-    inputs = [
-        { 'type': 'svm', 'params': {'C': 1} },
-        { 'type': 'LogisticRegression', 'params': {} },
-        { 'type': 'NaiveBayes', 'params': {} },
-    ]
+    inputs = input_parameters.algos
     outputs = []
 
     for input_algo in inputs:
         algo_type = input_algo['type']
-        params = input_algo['params']
+        params = input_algo.get('params', {})
         algo = Algorithm(algo_type, **params)
         algo.train_on_dataset(iris_set)
 

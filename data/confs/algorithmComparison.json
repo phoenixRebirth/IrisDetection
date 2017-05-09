@@ -1,0 +1,10 @@
+{
+  "sample_number": 10,
+  "test_proportion": 0.1,
+  "dataset_path": "./data/irisDataset.json",
+  "algos": [
+    { "type": "svm", "params": {"C": 1} },
+    { "type": "LogisticRegression", "params": {} },
+    { "type": "NaiveBayes", "params": {} }
+  ]
+}
