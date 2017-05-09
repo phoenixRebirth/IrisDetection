@@ -53,6 +53,13 @@ or
 python detection.py conf=data/algorithmComparaison.json
 ```
 
+You can also specify the following parameters from the command line:
+    - test proportion : p
+    - sample number: n
+```
+python detection.py conf=data/SVMcomparaisonInputParameters.json p=0.15 n=8
+```
+
 ## Authors
 
 * **Christophe Silhouette** - *Initial work* - [PhoenixRebirth](https://github.com/phoenixRebirth)
