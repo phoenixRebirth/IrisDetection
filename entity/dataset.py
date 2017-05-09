@@ -1,5 +1,8 @@
 from sklearn.model_selection import ShuffleSplit
 from sklearn import datasets
+import numpy
+
+import service.file_reader as file_reader
 
 class Dataset():
 
@@ -16,7 +19,6 @@ class Dataset():
             self.train_indexes_table.append(train_indexes)
             self.test_indexes_table.append(test_indexes)
 
-
     @staticmethod
     def import_data_from_sklearn():
         dataset = datasets.load_iris()
@@ -24,5 +26,14 @@ class Dataset():
 
     @staticmethod
     def import_data_from_file(filename):
-        print('this function is not supported yet')
-        exit()
+        # TODO : import directly data into numpy array
+        # TODO : manage numpy.array conversion error
+        parsed_data = file_reader.open_json(filename)
+        try:
+            data = parsed_data['data']
+            label = parsed_data['label']
+        except KeyError as e:
+            print('File is missing '+str(e)+' information')
+            exit()
+
+        return Dataset(numpy.array(data), numpy.array(label))

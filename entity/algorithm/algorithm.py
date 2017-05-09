@@ -1,4 +1,3 @@
-import pandas as pd
 from sklearn.utils import shuffle
 from sklearn import svm
 from sklearn.linear_model import LogisticRegression

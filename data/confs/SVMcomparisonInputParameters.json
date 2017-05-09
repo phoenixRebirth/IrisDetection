@@ -1,0 +1,15 @@
+{
+  "sample_number": 10,
+  "test_proportion": 0.1,
+  "dataset_path": "./data/datasets/irisDataset.json",
+  "algos": [
+    { "type": "svm", "params": {"C": 0.1} },
+    { "type": "svm", "params": {"C": 0.2} },
+    { "type": "svm", "params": {"C": 0.3} },
+    { "type": "svm", "params": {"C": 0.4} },
+    { "type": "svm", "params": {"C": 0.5} },
+    { "type": "svm", "params": {"C": 1} },
+    { "type": "svm", "params": {"C": 2} },
+    { "type": "svm", "params": {"C": 5} }
+  ]
+}
