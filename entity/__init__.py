@@ -6,3 +6,4 @@
 
 from .algorithm import Algorithm
 from .dataset import Dataset
+from .input_parameters import InputParameters
