@@ -3,6 +3,7 @@ from sklearn import datasets
 import numpy
 
 import service.file_reader as file_reader
+import service.network as network
 
 class Dataset():
 
@@ -25,10 +26,15 @@ class Dataset():
         return Dataset(dataset.data, dataset.target)
 
     @staticmethod
-    def import_data_from_file(filename):
+    def import_data_from_file_or_api(filename, use_api):
+        if (use_api):
+            parsed_data = Dataset.get_json_data_from_api(filename)
+        else:
+            parsed_data = Dataset.get_json_data_from_file(filename)
+
+
         # TODO : import directly data into numpy array
         # TODO : manage numpy.array conversion error
-        parsed_data = file_reader.open_json(filename)
         try:
             data = parsed_data['data']
             label = parsed_data['label']
@@ -37,3 +43,12 @@ class Dataset():
             exit()
 
         return Dataset(numpy.array(data), numpy.array(label))
+
+    @staticmethod
+    def get_json_data_from_file(filename):
+        return file_reader.open_json(filename)
+
+    @staticmethod
+    def get_json_data_from_api(url):
+        return network.get_url_content_as_json(url)
+

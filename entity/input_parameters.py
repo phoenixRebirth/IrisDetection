@@ -3,10 +3,11 @@ from config import DEFAULT_SAMPLE_NUMBER, DEFAULT_TEST_PROPORTION
 
 class InputParameters():
 
-    def __init__(self, sample_number, test_proportion, dataset_path, algos, *args, **kwargs):
+    def __init__(self, sample_number, test_proportion, dataset_path, algos, use_api = False, *args, **kwargs):
         self.sample_number = sample_number
         self.test_proportion = test_proportion
         self.dataset_path = dataset_path
+        self.use_api = use_api
         self.algos = algos
 
     @staticmethod
@@ -51,4 +52,6 @@ class InputParameters():
                 print('Algos must have a "type" key')
                 exit()
 
-        return InputParameters(sample_number, test_proportion, dataset_path, algos)
+        use_api = parsed_data.get('use_api', False)
+
+        return InputParameters(sample_number, test_proportion, dataset_path, algos, use_api)

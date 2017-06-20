@@ -1,1 +1,1 @@
-from .json_importer import open_json
+from .json_importer import open_json, read_json
