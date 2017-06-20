@@ -1,17 +1,7 @@
 import sys
-from sklearn.utils import shuffle
-from sklearn import svm
-from sklearn.linear_model import LogisticRegression
-import functools as ft
-import numpy as np
-from sklearn.model_selection import KFold
-import random
-from sklearn.model_selection import ShuffleSplit
-from sklearn.naive_bayes import GaussianNB
 import copy
 
 from entity import Dataset, Algorithm, InputParameters
-from config import DEFAULT_SAMPLE_NUMBER, DEFAULT_TEST_PROPORTION
 import service.parser as parser
 
 def extract_system_arguments(sys_args):
@@ -28,7 +18,7 @@ if __name__ == '__main__':
     config_path, command_arguments = extract_system_arguments(sys.argv)
     input_parameters = InputParameters.import_parameters_from_file(config_path, command_arguments)
 
-    iris_set = Dataset.import_data_from_file(input_parameters.dataset_path)
+    iris_set = Dataset.import_data_from_file_or_api(input_parameters.dataset_path, input_parameters.use_api)
     iris_set.generate_train_test_indexes(input_parameters.sample_number, input_parameters.test_proportion)
 
     inputs = input_parameters.algos
