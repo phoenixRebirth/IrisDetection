@@ -18,7 +18,7 @@ if __name__ == '__main__':
     config_path, command_arguments = extract_system_arguments(sys.argv)
     input_parameters = InputParameters.import_parameters_from_file(config_path, command_arguments)
 
-    iris_set = Dataset.import_data(input_parameters.dataset_path, input_parameters.dataset_type)
+    iris_set = Dataset.import_data(input_parameters.dataset_path, input_parameters.dataset_type, input_parameters.dataset_params)
     iris_set.generate_train_test_indexes(input_parameters.sample_number, input_parameters.test_proportion)
 
     inputs = input_parameters.algos
