@@ -1,7 +1,9 @@
 {
   "sample_number": 10,
   "test_proportion": 0.1,
-  "dataset_path": "./data/datasets/irisDataset.json",
+  "dataset": {
+    "path": "./data/datasets/irisDataset.json"
+  },
   "algos": [
     { "type": "svm", "params": {"C": 0.1} },
     { "type": "svm", "params": {"C": 0.2} },
