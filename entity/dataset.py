@@ -26,12 +26,14 @@ class Dataset():
         return Dataset(dataset.data, dataset.target)
 
     @staticmethod
-    def import_data_from_file_or_api(filename, use_api):
-        if (use_api):
+    def import_data(filename, dataset_type):
+        if (dataset_type == "api"):
             parsed_data = Dataset.get_json_data_from_api(filename)
-        else:
+        elif (dataset_type is None):
             parsed_data = Dataset.get_json_data_from_file(filename)
-
+        else:
+            print("unknown dataset type")
+            exit(-1)
 
         # TODO : import directly data into numpy array
         # TODO : manage numpy.array conversion error
@@ -40,7 +42,7 @@ class Dataset():
             label = parsed_data['label']
         except KeyError as e:
             print('File is missing '+str(e)+' information')
-            exit()
+            exit(-1)
 
         return Dataset(numpy.array(data), numpy.array(label))
 
