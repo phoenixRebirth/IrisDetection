@@ -1,8 +1,14 @@
 {
   "sample_number": 10,
   "test_proportion": 0.1,
+  "dataset_path": "http://127.0.0.1:8000/iris/get_all_data/",
   "dataset": {
-    "path": "./data/datasets/irisDataset.json"
+    "path": "/Users/christophesilhouette/Documents/projects/pierreIrisDetection/database/irisDatabase/db.sqlite3",
+    "type": "db",
+    "params": {
+      "iris_table": "iris_iris",
+      "label_table": "iris_label"
+    }
   },
   "algos": [
     { "type": "svm", "params": {"C": 0.1} },

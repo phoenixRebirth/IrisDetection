@@ -46,18 +46,18 @@ Feel free to add your own personal algorithms
 ##### Use cases
 command line to use the code:
 ```
-python detection.py conf=data/SVMcomparaisonInputParameters.json
+python detection.py conf=data/confs/SVMcomparisonInputParameters.json
 ```
 or
 ```
-python detection.py conf=data/algorithmComparaison.json
+python detection.py conf=data/confs/algorithmComparison.json
 ```
 
 You can also specify the following parameters from the command line:
     - test proportion : p
     - sample number: n
 ```
-python detection.py conf=data/SVMcomparaisonInputParameters.json p=0.15 n=8
+python detection.py conf=data/confs/SVMcomparisonInputParameters.json p=0.15 n=8
 ```
 
 ## Authors

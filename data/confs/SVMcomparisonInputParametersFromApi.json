@@ -2,7 +2,8 @@
   "sample_number": 10,
   "test_proportion": 0.1,
   "dataset": {
-    "path": "./data/datasets/irisDataset.json"
+    "path": "http://127.0.0.1:8000/iris/get_all_data/",
+    "type": "api"
   },
   "algos": [
     { "type": "svm", "params": {"C": 0.1} },
